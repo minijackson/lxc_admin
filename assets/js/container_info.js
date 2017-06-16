@@ -106,7 +106,7 @@ export var update_containers_short_info = function() {
 
 			containers_tbody.innerHTML = "";
 
-			for(let container_name in infos) {
+			for(let container_name of Object.keys(infos).sort()) {
 				let container_info = infos[container_name]
 
 				template_name.innerHTML = container_name
@@ -117,7 +117,7 @@ export var update_containers_short_info = function() {
 
 				let template_inst = document.importNode(template_el.content, /* deep = */ true)
 
-				containers_tbody.appendChild(template_inst);
+				containers_tbody.appendChild(template_inst)
 			}
 		})
 	}
