@@ -1,4 +1,5 @@
 # LXCAdmin
+A web interface to manage LXC containers
 
 To start your Phoenix server:
 
