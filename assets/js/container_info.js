@@ -62,7 +62,7 @@ let update_socket = function(channel_name, callback, interval = 2000) {
 
 export var update_container_info = function(container_name, verbosity) {
 
-	let state_el = document.querySelector("#state");
+	let state_el = document.querySelector("#state")
 	let channel_name = "container_info:" + container_name
 
 	update_socket(channel_name, payload => {
@@ -89,7 +89,7 @@ let replace_action_links = function(template, container_name, href_format, actio
 export var update_containers_short_info = function() {
 	if('content' in document.createElement('template')) {
 
-		let template_el = document.querySelector("#container-info-template");
+		let template_el = document.querySelector("#container-info-template")
 
 		let template_name = template_el.content.querySelector(".name")
 		let template_state = template_el.content.querySelector(".state")
@@ -98,13 +98,13 @@ export var update_containers_short_info = function() {
 		let href_format = template_el.content.querySelector("a.btn.btn-xs").getAttribute("href")
 		let action_format = template_el.content.querySelector("td.text-right form").getAttribute("action")
 
-		let containers_tbody = document.querySelector("#containers");
+		let containers_tbody = document.querySelector("#containers")
 
 		update_socket("containers_short_info", infos => {
-			console.info("Infos received:")
+			console.info("Infos received")
 			console.table(infos)
 
-			containers_tbody.innerHTML = "";
+			containers_tbody.innerHTML = ""
 
 			for(let container_name of Object.keys(infos).sort()) {
 				let container_info = infos[container_name]
