@@ -1,0 +1,76 @@
+<h2>Show Container</h2>
+
+<h3>General information</h3>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @container.name %>
+  </li>
+
+  <li>
+    <strong>State:</strong>
+    <span id="state"><%= @container.state %></span>
+  </li>
+
+</ul>
+
+<%= if @container.state == :running do %>
+
+  <h3>System usage</h3>
+
+  <ul>
+
+    <li>
+      <strong>PID:</strong>
+      <%= @container.pid %>
+    </li>
+
+    <li>
+      <strong>CPU use:</strong>
+      <%= Float.round @container.cpu / 1000000000, 2 %> seconds
+    </li>
+
+    <li>
+      <strong>Memory use:</strong>
+      <%= humanize_bytes @container.memory %>
+    </li>
+
+  </ul>
+
+  <h3>Networking</h3>
+
+  <ul>
+
+    <li>
+      <strong>IP:</strong>
+      <%= @container.ip %>
+    </li>
+
+    <li>
+      <strong>Network link:</strong>
+      <%= @container.link %>
+    </li>
+
+    <li>
+      <strong>Transmitted:</strong>
+      <%= humanize_bytes @container.tx %>
+    </li>
+
+    <li>
+      <strong>Received:</strong>
+      <%= humanize_bytes @container.rx %>
+    </li>
+
+    <li>
+      <strong>Total:</strong>
+      <%= humanize_bytes @container.total %>
+    </li>
+
+  </ul>
+
+<%= end %>
+
+<span><%= link "Edit", to: container_path(@conn, :edit, @container) %></span>
+<span><%= link "Back", to: container_path(@conn, :index) %></span>

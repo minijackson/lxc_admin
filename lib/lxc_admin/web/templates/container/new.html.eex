@@ -1,0 +1,6 @@
+<h2>New Container</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: container_path(@conn, :create) %>
+
+<span><%= link "Back", to: container_path(@conn, :index) %></span>
