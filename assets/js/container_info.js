@@ -54,10 +54,10 @@ let update_socket = function(channel_name, callback, interval = 2000) {
 
 	channel.join()
 		.receive("ok", resp => {
-			console.log("Joined successfully", channel_name, resp)
+			console.info("Joined successfully", channel_name, resp)
 			window.setInterval(() => channel.push("update", {}), interval)
 		})
-		.receive("error", resp => { console.log("Unable to join", channel_name, resp) })
+		.receive("error", resp => { console.warn("Unable to join", channel_name, resp) })
 }
 
 export var update_container_info = function(container_name, verbosity) {
@@ -66,35 +66,59 @@ export var update_container_info = function(container_name, verbosity) {
 	let channel_name = "container_info:" + container_name
 
 	update_socket(channel_name, payload => {
-		console.log("Payload received:")
+		console.info("Infos received")
 		console.table(payload)
 		state_el.innerHTML = payload.state
 	})
 }
 
+let replace_action_links = function(template, container_name, href_format, action_format) {
+	let links = template.content.querySelectorAll("a.btn.btn-xs")
+
+	links.forEach(el => {
+		let href = href_format.replace("XXnameXX", container_name)
+		el.setAttribute("href", href)
+	})
+
+	let form = template.content.querySelector("form")
+
+	let action = action_format.replace("XXnameXX", container_name)
+	form.setAttribute("action", action)
+}
+
 export var update_containers_short_info = function() {
-	let containers_el = {}
-	document.querySelectorAll(".container-info").forEach(function(el) {
-		let name = el.querySelector(".name").innerHTML
-		let state_el = el.querySelector(".state")
-		let ip_el = el.querySelector(".ip")
+	if('content' in document.createElement('template')) {
 
-		containers_el[name] = {
-			state: state_el,
-			ip: ip_el,
-		}
-	})
+		let template_el = document.querySelector("#container-info-template");
 
-	update_socket("containers_short_info", infos => {
-		console.log("Infos received:")
-		console.table(infos)
+		let template_name = template_el.content.querySelector(".name")
+		let template_state = template_el.content.querySelector(".state")
+		let template_ip = template_el.content.querySelector(".ip")
 
-		for(let container_name in infos) {
-			let container_el = containers_el[container_name]
-			let container_info = infos[container_name]
+		let href_format = template_el.content.querySelector("a.btn.btn-xs").getAttribute("href")
+		let action_format = template_el.content.querySelector("td.text-right form").getAttribute("action")
 
-			container_el["state"].innerHTML = container_info.state;
-			container_el["ip"].innerHTML = container_info.ip;
-		}
-	})
+		let containers_tbody = document.querySelector("#containers");
+
+		update_socket("containers_short_info", infos => {
+			console.info("Infos received:")
+			console.table(infos)
+
+			containers_tbody.innerHTML = "";
+
+			for(let container_name in infos) {
+				let container_info = infos[container_name]
+
+				template_name.innerHTML = container_name
+				template_state.innerHTML = container_info.state
+				template_ip.innerHTML = container_info.ip
+
+				replace_action_links(template_el, container_name, href_format, action_format)
+
+				let template_inst = document.importNode(template_el.content, /* deep = */ true)
+
+				containers_tbody.appendChild(template_inst);
+			}
+		})
+	}
 }

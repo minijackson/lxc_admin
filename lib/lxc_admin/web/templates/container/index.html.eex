@@ -10,7 +10,7 @@
       <th></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="containers">
 <%= for container <- @containers do %>
     <tr class="container-info">
       <td class="name"><%= container.name %></td>
@@ -28,3 +28,17 @@
 </table>
 
 <span><%= link "New Container", to: container_path(@conn, :new) %></span>
+
+<template id="container-info-template">
+  <tr>
+    <td class="name"></td>
+    <td class="state"></td>
+    <td class="ip"></td>
+
+    <td class="text-right">
+      <span><%= link "Show", to: container_path(@conn, :show, %Container{name: "XXnameXX"}), class: "btn btn-default btn-xs" %></span>
+      <span><%= link "Edit", to: container_path(@conn, :edit, %Container{name: "XXnameXX"}), class: "btn btn-default btn-xs" %></span>
+      <span><%= link "Delete", to: container_path(@conn, :delete, %Container{name: "XXnameXX"}), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+    </td>
+  </tr>
+</template>

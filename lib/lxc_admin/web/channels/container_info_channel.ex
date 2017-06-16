@@ -32,6 +32,7 @@ defmodule LXCAdmin.Web.ContainerInfoChannel do
             |> Enum.map(fn %Container{name: name, state: state, ip: ip} -> 
               {name, %{state: state, ip: ip}}
             end)
+            |> Enum.sort_by(fn {name, _} -> name end)
             |> Enum.into(%{})
 
     push socket, "update", infos

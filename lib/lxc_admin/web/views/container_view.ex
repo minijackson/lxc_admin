@@ -13,6 +13,8 @@ end
 defmodule LXCAdmin.Web.ContainerView do
   use LXCAdmin.Web, :view
 
+  alias LXCAdmin.Containers.Container
+
   alias __MODULE__.Macros
   require Macros
 

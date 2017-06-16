@@ -2,73 +2,53 @@
 
 <h3>General information</h3>
 
-<ul>
+<dl>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @container.name %>
-  </li>
+  <dt>Name:</dt>
+  <dd><%= @container.name %></dd>
 
-  <li>
-    <strong>State:</strong>
-    <span id="state"><%= @container.state %></span>
-  </li>
+  <dt>State:</dt>
+  <dd><span id="state"><%= @container.state %></span></dd>
 
-</ul>
+</dl>
 
 <%= if @container.state == :running do %>
 
   <h3>System usage</h3>
 
-  <ul>
+  <dl>
 
-    <li>
-      <strong>PID:</strong>
-      <%= @container.pid %>
-    </li>
+    <dt>PID:</dt>
+    <dd><%= @container.pid %></dd>
 
-    <li>
-      <strong>CPU use:</strong>
-      <%= Float.round @container.cpu / 1000000000, 2 %> seconds
-    </li>
+    <dt>CPU use:</dt>
+    <dd><%= Float.round @container.cpu / 1000000000, 2 %> seconds</dd>
 
-    <li>
-      <strong>Memory use:</strong>
-      <%= humanize_bytes @container.memory %>
-    </li>
+    <dt>Memory use:</dt>
+    <dd><%= humanize_bytes @container.memory %></dd>
 
-  </ul>
+  </dl>
 
   <h3>Networking</h3>
 
-  <ul>
+  <dl>
 
-    <li>
-      <strong>IP:</strong>
-      <%= @container.ip %>
-    </li>
+    <dt>IP:</dt>
+    <dd><%= @container.ip %></dd>
 
-    <li>
-      <strong>Network link:</strong>
-      <%= @container.link %>
-    </li>
+    <dt>Network link:</dt>
+    <dd><%= @container.link %></dd>
 
-    <li>
-      <strong>Transmitted:</strong>
-      <%= humanize_bytes @container.tx %>
-    </li>
+    <dt>Transmitted:</dt>
+    <dd><%= humanize_bytes @container.tx %></dd>
 
-    <li>
-      <strong>Received:</strong>
-      <%= humanize_bytes @container.rx %>
-    </li>
+    <dt>Received:</dt>
+    <dd><%= humanize_bytes @container.rx %></dd>
 
-    <li>
-      <strong>Total:</strong>
-      <%= humanize_bytes @container.total %>
-    </li>
+    <dt>Total:</dt>
+    <dd><%= humanize_bytes @container.total %></dd>
 
-  </ul>
+  </dl>
 
 <%= end %>
 
